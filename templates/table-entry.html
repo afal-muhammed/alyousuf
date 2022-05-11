@@ -68,18 +68,14 @@
 
             		</tr>
         	</thead>
-        	{% if items_list %}
+        	{% if job_listings %}
         	<tbody>
-    		{% for item in items_list %}
+    		{% for item in job_listings %}
 		<tr>
-        		<td>{{ item.part_name }}</td>
-			<td>{% if item.part_description %}{{ item.part_description }}{% endif %}{% if item.stk  %}&{{item.stk}}{% endif %}</td>
-			<td>{{ item.total_count }}</td>
-			<td>{{ item.location.shelf.name }}</td>
-			<td>{{ item.location.bin_obj.name }}</td>
-			<td>{{ item.location.name }}</td>
-			<td>{% if item.remarks %}{{ item.remarks }}{% endif %}</td>
-			<td class="{% if item.total_count < 10 %}yes{% else %}no{% endif %}">{% if item.total_count < 10 %} Yes {% else %} No {% endif %}</td>
+        		<td>{{ item.title }}</td>
+			<td>{% if item.job_description %}{{ item.job_description }}{% endif %}{% endif %}</td>
+			<td>{{ item.location }}</td>
+			<td>{{ item.phone_number }}</td>
         </tr>
 
 	{% empty %}
