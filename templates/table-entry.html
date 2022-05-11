@@ -1,0 +1,121 @@
+{% extends 'index.html' %}
+{% block content %}
+<div id="Add_Product_Out" class="modal fade">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title">Transfer Inventory</h3>
+            </div>
+            <div class="modal-body mdl-bdy">
+			  <form id="signup_form" enctype='multipart/form-data'>
+                        {% csrf_token %}
+                        <div class="form-group">
+                            <lSabel for="username">First Name</lSabel>
+                            <input type="text" class="form-control " id="first_name"
+                                   name="first_name" value="">
+                        </div>
+                        <div class="form-group">
+                            <lSabel for="username">Last Name</lSabel>
+                            <input type="text" class="form-control" id="last_name"
+                                   name="last_name" value="">
+                        </div>
+                        <div class="form-group">
+                            <lSabel for="username" class="required">Username</lSabel>
+                            <input type="text" class="form-control" id="username"
+                                   name="username" value="">
+                        </div>
+                        <div class="form-group">
+                            <lSabel for="username" class="required">Email</lSabel>
+                            <input type="text" class="form-control text-lowercase" id="email"
+                                   name="email" value="">
+                        </div>
+                        <div class="form-group">
+                            <label class="d-flex flex-row align-items-center required" for="password">Password
+                            </label>
+                            <input type="password" class="form-control"  id="password" name="password1"
+                                   value="">
+                        </div>
+                        <div class="form-group">
+                            <label class="d-flex flex-row align-items-center required" for="confirm_password">Confirm Password
+                            </label>
+                            <input type="password" class="form-control" id="confirm_password" name="password2"
+                                   value="">
+                        </div>
+                        <div class="form-group pt-1">
+                            <button class="btn btn-primary btn-block" type="submit">Signup</button>
+                        </div>
+                        <div class="error">
+                        </div>
+                    </form>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div>
+    <caption><h3 class="header_text">Job listings</h3></caption>
+	<table id="example" class="table table-bordered display" style="width:100%">
+    		<thead class="thead-dark">
+            		<tr>
+				<th>Job Title</th>
+				<th>Job Description</th>
+<!--				<th>Purchased Count</th>-->
+<!--				<th>Allocated Count</th>-->
+                <th>Job location</th>
+                <th>contact</th>
+<!--                <th>Box</th>-->
+<!--                <th>Hole</th>-->
+<!--                        <th>Remarks</th>-->
+<!--                        <th>Need to purchase?</th>-->
+
+            		</tr>
+        	</thead>
+        	{% if items_list %}
+        	<tbody>
+    		{% for item in items_list %}
+		<tr>
+        		<td>{{ item.part_name }}</td>
+			<td>{% if item.part_description %}{{ item.part_description }}{% endif %}{% if item.stk  %}&{{item.stk}}{% endif %}</td>
+			<td>{{ item.total_count }}</td>
+			<td>{{ item.location.shelf.name }}</td>
+			<td>{{ item.location.bin_obj.name }}</td>
+			<td>{{ item.location.name }}</td>
+			<td>{% if item.remarks %}{{ item.remarks }}{% endif %}</td>
+			<td class="{% if item.total_count < 10 %}yes{% else %}no{% endif %}">{% if item.total_count < 10 %} Yes {% else %} No {% endif %}</td>
+        </tr>
+
+	{% empty %}
+		</tbody>
+		<tfoot>
+            		<tr>
+				<th>Item Name</th>
+				<th>Item Description</th>
+                <th>Bin</th>
+				<th>Product In Count</th>
+				<th>Product Out Count</th>
+				<th>Product Purchased Count</th>
+                <th>Total Count</th>
+            		</tr>
+        	</tfoot>
+	</table>
+    		<p>No details are available.</p>
+
+{% endfor %}
+
+
+	{% endif %}
+
+
+
+<script type="text/javascript">
+			$(document).ready(function() {
+    				$('#example').DataTable({
+        "aLengthMenu": [[25, 50, 75, -1], [25, 50, 75, "All"]],
+        "iDisplayLength": 25
+    });
+<!--					$('.dataTables_paginate').prepend('<i class="fa fa-plus cursor" id="add-button" data-toggle="modal" data-target="#Add_Product_Out" aria-hidden="true">ADD</i>')-->
+                    $('.dataTables_info').prepend('<a href="{% url 'importer' %}"><button id="export" class="btn cursor export" >Export</button></a>')
+                    $('.dataTables_filter').prepend('<a href="{% url 'importer' %}"><button id="grid" class="btn cursor export" >GridView</button></a>')
+
+			} );
+	</script>
+
+{% endblock %}
