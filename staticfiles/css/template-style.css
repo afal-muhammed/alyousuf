@@ -11,7 +11,7 @@ color:000;
 }
 .table .thead-dark th {
     color: #fff;
-    background-color: #04acec;
+    background-color: #dc3545d6;
     border-color: #32383e;
 }
 
@@ -71,7 +71,7 @@ margin-right:10px !important;
 background-color:#04acec !important;
 }
 .btn:hover{
-background-color:#04acec !important;
+background-color:#dc3545d6; !important;
 }
 .next{
 margin-right:10px !important;

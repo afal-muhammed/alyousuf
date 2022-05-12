@@ -73,7 +73,7 @@
     		{% for item in job_listings %}
 		<tr>
         		<td>{{ item.title }}</td>
-			<td>{% if item.job_description %}{{ item.job_description }}{% endif %}{% endif %}</td>
+			<td>{% if item.job_description %}{{ item.job_description }}{% endif %}</td>
 			<td>{{ item.location }}</td>
 			<td>{{ item.phone_number }}</td>
         </tr>
@@ -108,7 +108,7 @@
         "iDisplayLength": 25
     });
 <!--					$('.dataTables_paginate').prepend('<i class="fa fa-plus cursor" id="add-button" data-toggle="modal" data-target="#Add_Product_Out" aria-hidden="true">ADD</i>')-->
-                    $('.dataTables_info').prepend('<a href="{% url 'importer' %}"><button id="export" class="btn cursor export" >Export</button></a>')
+                    $('.dataTables_info').prepend('<a href="{% url 'importer' %}"><button id="export" class="btn cursor export" >Import</button></a>')
                     $('.dataTables_filter').prepend('<a href="{% url 'importer' %}"><button id="grid" class="btn cursor export" >GridView</button></a>')
 
 			} );

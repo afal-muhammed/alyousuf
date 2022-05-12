@@ -1,0 +1,52 @@
+{% extends 'index.html' %}
+{% block content %}
+<p>Paste excel data here:</p>
+<textarea name="excel_data" style="width:250px;height:150px;"></textarea><br>
+<input type="button" onclick="javascript:generateTable()" value="Genereate Table"/>
+<br><br>
+    <p>Table data will appear below</p>
+<hr>
+<form id="job" method="post">
+     {% csrf_token %}
+    <input type="hidden" name="jobs[]">
+<div id="excel_table"></div>
+    <input id="submit" type="submit" value="Submit Table" class="hidden">
+</form>
+
+
+<script>
+    function generateTable() {
+    var data = $('textarea[name=excel_data]').val();
+    console.log(data);
+    var rows = data.split("\n");
+    console.log(rows[0], "aaaaaaaaaaaaa");
+    var table = $('<table />');
+    for(var y in rows) {
+        if(y==0)
+        {
+            var cells = rows[y].split("\t");
+            var row = $('<tr />');
+            for(var x in cells)
+            {
+            row.append('<th >'+cells[x]+'</th>');
+            }
+        }
+        else
+        {
+            var cells = rows[y].split("\t");
+            var row = $('<tr /><input type="hidden" name="table-rows[]" value="'+cells+'">');
+            for(var x in cells)
+            {
+             row.append('<td>'+cells[x]+'</td>');
+            }
+        }
+        table.append(row);
+}
+
+// Insert into DOM
+$('#excel_table').html(table);
+ var element = document.getElementById("submit");
+  element.classList.remove("hidden");
+}
+</script>
+{% endblock %}
