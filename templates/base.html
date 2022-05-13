@@ -8,9 +8,18 @@
     <meta name="keywords" content="#">
     <script src="{% static 'js/jquery-3.3.1.min.js' %}"></script>
     <script src="{% static 'js/cloudflare.js' %}"></script>
+    <script type="text/javascript" charset="utf8" src="{% static 'DataTables/datatables.js' %}"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-multiselect/0.9.15/js/bootstrap-multiselect.min.js"></script>
+
+
+    <link rel="stylesheet" type="text/css" href="{% static 'DataTables/datatables.css' %}"/>
+    <script type="text/javascript" charset="utf8" src="{% static 'js/bootstrap.min.js' %}"></script>
+    <link rel="stylesheet" type="text/css" href="{% static 'css/bootstrap.min.css' %}"/>
+    <link rel="stylesheet" type="text/css" href="{% static 'css/main.css' %}"/>
+    <link rel="stylesheet" href="{% static 'css/template-style.css' %}">
     <link rel="shortcut icon" href="#">
-    <title>Evently</title>
-    <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
+    <title>Listed</title>
+<!--    <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">-->
 
     <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700,900" rel="stylesheet">
 
@@ -71,6 +80,7 @@
 {% endblock %}
 
 
+{% if request.GET.grid == "True" %}
 <footer class="main-block gray">
     <div class="container-fluid">
         <div class="row">
@@ -106,6 +116,7 @@
         </div>
     </div>
 </footer>
+{% endif  %}
 
 
 <script src="{% static 'js/popper.min.js' %}"></script>

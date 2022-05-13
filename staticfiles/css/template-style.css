@@ -42,7 +42,7 @@ padding:0.5em 1em !important;
     color: black !important;
 }
 .dataTables_wrapper:hover .dataTables_paginate.hover .paginate_button.disabled, .dataTables_wrapper .dataTables_paginate:hover .paginate_button.disabled:hover, .dataTables_wrapper .dataTables_paginate .paginate_button.disabled:active {
-background-color:#04acec;
+background-color:#dc3545d6;
 border-radius:0.25rem;
 }
 .dataTables_wrapper .dataTables_filter input {

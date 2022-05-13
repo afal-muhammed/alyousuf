@@ -18,8 +18,7 @@
         <div class="row justify-content-center">
             <div class="col-md-10">
                 <div class="titile-block">
-                    {% if events %}
-                    <h2>Upcoming Events</h2>
+                    {% if page_obj %}
                     <p>These listings are featured by our community</p>
                     {% else %}
                     <h2>No Jobs to list</h2>
@@ -31,13 +30,12 @@
             {% for job in page_obj %}
             <div class="col-md-4 card-1">
                 <div class="card">
-<!--                    <a class="card-anchor" href="{% url 'event-detail' event.slug %}">-->
-                        <img class="card-img-top card-image" src="{{event.get_banner_image}}" alt="Card image cap">
+                        <img class="card-img-top card-image" src="{{job.get_job_image}}" alt="Card image cap">
                         <div class="card-body">
                             <h5 class="card-title">{{job.title}}</h5>
-                            <ul class="">
-                                <!--                            <i class="fa fa-circle" aria-hidden="true"></i>-->
-                                <li>Posted Date:{{job.posted_date}}</li>
+<!--                            <ul class="">-->
+<!--                                                            <i class="fa fa-circle" aria-hidden="true"></i>-->
+                                Posted Date:{{job.posted_date}}
                                 <!--                            <i class="fa fa-circle" aria-hidden="true"></i>-->
 <!--                                <li>end date:{{event.end_date}}</li>-->
                                 <!--                            <li>-->
@@ -53,9 +51,9 @@
                                 <!--</g></g> </svg>-->
                                 <!--                                Cafe-->
                                 <!--                            </li>-->
-                            </ul>
+<!--                            </ul>-->
                             <p class="card-text">
-                                <!--                            {{event.description}}.-->
+
                                 {{ job.job_description|linebreaks|safe|truncatewords:20 }}
                                 {% ifnotequal job.job_description job.job_description|truncatewords:20 %}
 <!--                                <a class="readmore" href="{% url 'event-detail' event.slug %}"><B>Continue-->
@@ -66,14 +64,6 @@
                         <div class="card-bottom">
                             <p><i class="ti-location-pin"></i>{{job.location}}</p>
                             <span class="open-close_green">
-<!--                            {% if event.end_date.date == now.date and event.start_date.date <= now.date %}-->
-<!--                              {% if event.start_date.time < now.time and event.end_date.time > now.time %}On Going-->
-<!--                              {% endif %}-->
-<!--                            {% else %}-->
-<!--                            {% if event.end_date.date > now.date and event.start_date.date <= now.date %}-->
-<!--                              On Going-->
-<!--                            {% endif %}-->
-<!--                              {% endif %}-->
                             </span>
                         </div>
                     </a>

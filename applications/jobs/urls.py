@@ -7,5 +7,5 @@ from . import views
 
 urlpatterns = [
     path('importer/', views.ImporterView.as_view(), name="importer"),
-    path('', views.LandingView.as_view(), name="landing")
+    path('', views.LandingViewTabular.as_view(), name="landing")
     ]
