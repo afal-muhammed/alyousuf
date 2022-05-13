@@ -11,7 +11,7 @@ from django.contrib import messages
 
 
 class LandingViewTabular(ListView):
-    template_name = 'table-entry.html'
+    template_name = 'entries.html'
     context_object_name = 'job_listings'
     paginate_by = 8
 
@@ -22,9 +22,11 @@ class LandingViewTabular(ListView):
         location = request.POST.get("job-location", '')
         company_name = request.POST.get("comapny-name", '')
         contact = request.POST.get("contact", '')
+        if request.FILES:
+            image = request.FILES['company-logo']
         try:
             JobOpportunities.objects.get_or_create(title=title, job_description=description, location=location,
-                                                   company_name=company_name, phone_number=contact)
+                                                   company_name=company_name, phone_number=contact, company_logo=image)
             data ={}
             data["result"] = "success"
             return HttpResponse(json.dumps(data),

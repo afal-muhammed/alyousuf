@@ -1,4 +1,5 @@
 {% extends 'base.html' %}
+{% load static %}
 {% block content %}
 	<div id="Add_Product_Out" class="modal fade">
     <div class="modal-dialog" role="document">
@@ -9,6 +10,20 @@
             <div class="modal-body mdl-bdy">
 				              <form role="form" id="job-opportunity" action="">
 								  {% csrf_token %}
+                      <div class="form-group">
+                          <div class="row profile-disp">
+                            <div class="col-md-6">
+                               <input type="file" name="company-logo" class="hidden" id="upload" accept="image/*"
+                                      onchange="showPreview(event);">
+                                <div class="profile-mobile profile-image">
+                                    <img style="border-radius:50%;" src="{% static 'images/jobs.jpg' %}"
+                                         class="prof-img class-pointer" onclick="imageUpload()" id="image">
+                                    <span class="class-pointer up-image-text display-block" onclick="imageUpload()">+Upload Company Logo</span>
+                                   </div>
+
+                            </div>
+                        </div>
+                    </div>
                      <div class="form-group">
                         <label class="control-label">Job Title</label>
                         <div>
@@ -233,6 +248,18 @@
                 $('.dataTables_filter').prepend('<a href="{% url 'landing' %}?grid=True"><i class="fa fa-th" style="color:#dc3545d6;" aria-hidden="true"></a>')
 
 			} );
+
+    function showPreview(event){
+  if(event.target.files.length > 0){
+    var src = URL.createObjectURL(event.target.files[0]);
+    var preview = document.getElementById("image");
+    preview.src = src;
+    preview.style.display = "block";
+  }
+}
+function imageUpload(){
+        $('#upload').click();
+	}
 
 	$("#job-opportunity").submit(function(e) {
        e.preventDefault();
