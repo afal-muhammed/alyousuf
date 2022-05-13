@@ -159,7 +159,7 @@
                             <h5 class="card-title">{{job.title}}</h5>
 <!--                            <ul class="">-->
 <!--                                                            <i class="fa fa-circle" aria-hidden="true"></i>-->
-                                Posted Date:{{job.posted_date}}
+<!--                                Posted Date:{{job.posted_date}}-->
                                 <!--                            <i class="fa fa-circle" aria-hidden="true"></i>-->
 <!--                                <li>end date:{{event.end_date}}</li>-->
                                 <!--                            <li>-->
@@ -242,8 +242,9 @@
     				$('#example').DataTable({
         "aLengthMenu": [[25, 50, 75, -1], [25, 50, 75, "All"]],
         "iDisplayLength": 25
-    });
+    });             {% if request.user.is_authenticated %}
 					$('.dataTables_paginate').prepend('<i class="fa fa-plus cursor" id="add-button" data-toggle="modal" data-target="#Add_Product_Out" aria-hidden="true">ADD</i>')
+                    {% endif %}
                 $('.dataTables_info').prepend('<a href="{% url 'importer' %}"><button id="export" class="btn cursor export" >Import</button></a>')
                 $('.dataTables_filter').prepend('<a href="{% url 'landing' %}?grid=True"><i class="fa fa-th" style="color:#dc3545d6;" aria-hidden="true"></a>')
 
