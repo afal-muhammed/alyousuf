@@ -22,6 +22,7 @@ python manage.py runserver
 <li>A table will be generated as a preview in UI when user copy paste</li>
 <li>User can upload csv file.Once uploaded a preview will be shown in the UI and they can confirm</li>
 <li>Pagination added for both list view and Grid View</li>
+<li>Added import in admin side as well so that admin can add data's in bulk</li>
 <li>A form is available in the list page to add job posting</li>
 
 **Scope for Improvement**
