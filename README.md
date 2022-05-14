@@ -18,7 +18,7 @@ python manage.py runserver
 <li>Landing page with all the jobs listed</li>
 <li>We have both list View and Grid View</li>
 <li>Logged in User can add job postings in the list view page and also there is an import page where user can copy/paste the data like excel and also can upload the csv file</li>
-<li>When copy pasting system excepts the rows to be in a sequence and also expects these heading present[job_title,description,location,company name ,contact]</li>
+<li>When copy pasting system excepts coloumns to be identical to model fields, but can be in any order[title,job_description,location,company_name ,phone_number]</li>
 <li>A table will be generated as a preview in UI when user copy paste</li>
 <li>User can upload csv file.Once uploaded a preview will be shown in the UI and they can confirm</li>
 <li>Pagination added for both list view and Grid View</li>
