@@ -8,7 +8,8 @@
         </div>
          <textarea name="excel_data" style="width:400px;height:200px;"></textarea>
         <p>Table data will appear below</p>
-        <button class="btn cursor export" onclick="javascript:generateTable()" value="Genereate Table">Generate Table
+        <h3 id="text-message"></h3>
+        <button class="btn btn-primary cursor export" onclick="javascript:generateTable()" value="Genereate Table">Generate Table
         </button>
     </div>
 </section>
@@ -124,14 +125,17 @@
 <script>
     function generateTable() {
     var data = $('textarea[name=excel_data]').val();
-    console.log(data);
+    if (data === ""){
+    alert("please paste something");
+    }
+
     var rows = data.split("\n");
     var table = $('<table />');
     for(var y in rows) {
         if(y==0)
         {
             var cells = rows[y].split("\t");
-            var row = $('<tr />');
+            var row = $('<tr /><input type="hidden" name="table-colomns[]" value="'+cells+'">');
             for(var x in cells)
             {
             row.append('<th >'+cells[x]+'</th>');
@@ -176,6 +180,8 @@ $('#excel_table').html(table);
                     var dvCSV = document.getElementById("dvCSV");
                     dvCSV.innerHTML = "";
                     dvCSV.appendChild(table);
+                     $("#confirm").removeClass("hidden");
+                     $("#preview-text").removeClass("hidden");
                 }
                 reader.readAsText(fileUpload.files[0]);
             } else {
@@ -184,8 +190,6 @@ $('#excel_table').html(table);
         } else {
             alert("Please upload a valid CSV file.");
         }
-        $("#confirm").removeClass("hidden");
-        $("#preview-text").removeClass("hidden");
     }
 </script>
 

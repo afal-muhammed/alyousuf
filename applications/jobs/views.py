@@ -64,6 +64,14 @@ class ImporterView(View):
 
     def post(self, request):
         rows = request.POST.getlist("table-rows[]", False)
+        coloumns = request.POST.getlist("table-colomns[]", False)
+        coloumn_list = []
+        coloumn_order = {}
+        if coloumns:
+            coloumn_list = coloumns[0].split(',')
+            for i, item in enumerate(coloumn_list):
+                coloumn_order[item] = i
+        print(coloumn_order)
         if request.FILES:
             csv_file = request.FILES["csv_file"]
             print(csv_file)
@@ -82,15 +90,17 @@ class ImporterView(View):
                 job_resource.import_data(dataset, dry_run=False)  # Actually import now
             return redirect('landing')
         elif rows:
+            print(rows)
             for row in rows:
                 if row:
                     item_list = row.split(",")
                     job_obj = JobOpportunities()
-                    job_obj.title = item_list[0]
-                    job_obj.job_description = item_list[1]
-                    job_obj.location = item_list[2]
-                    job_obj.phone_number = item_list[3]
-                    job_obj.company_name = item_list[4]
+
+                    job_obj.title = item_list[coloumn_order["title"]]
+                    job_obj.job_description = item_list[coloumn_order["job_description"]]
+                    job_obj.location = item_list[coloumn_order["location"]]
+                    job_obj.phone_number = item_list[coloumn_order["phone_number"]]
+                    job_obj.company_name = item_list[coloumn_order["company_name"]]
                     job_obj.save()
             return redirect("landing")
         else:
