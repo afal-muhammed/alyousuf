@@ -1,6 +1,6 @@
 # alyousuf
 
-A Django Project which lists the available jobs that are listed by the user
+A Django Project which lists the available jobs that are listed by the users
 
 Setup:
 create a virtualenv using virtualenv -p python3 envname<br>
