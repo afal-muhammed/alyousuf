@@ -24,7 +24,7 @@ class LandingViewTabular(ListView):
         title = request.POST.get("job-title", '')
         description = request.POST.get("job-description", '')
         location = request.POST.get("job-location", '')
-        company_name = request.POST.get("comapny-name", '')
+        company_name = request.POST.get("company-name", '')
         contact = request.POST.get("contact", '')
         if request.FILES:
             image = request.FILES['company-logo']

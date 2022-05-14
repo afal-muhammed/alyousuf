@@ -17,7 +17,7 @@ class JobOpportunities(models.Model):
     phone_number = models.CharField(max_length=50, blank=True, null=True)
 
     def __str__(self):
-        return self.title + self.company_name
+        return self.title + ' at ' + self.company_name
 
     def get_job_image(self):
         return self.company_logo.url if self.company_logo else  settings.STATIC_URL + 'images/jobs.jpg'
