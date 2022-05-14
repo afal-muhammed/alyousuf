@@ -146,9 +146,11 @@
                     <a href="{% url 'landing' %}?grid=False"><i class="fa fa-list" style="color:#dc3545d6;" aria-hidden="true"></i></a></p>
                     {% else %}
                     <h2>No Jobs to list</h2>
+                    {% if request.user.is_authenticated %}
                     <p>You can add one going to the listing page
                         <a href="{% url 'landing' %}?grid=False"><i class="fa fa-list" style="color:#dc3545d6;" aria-hidden="true"></i></a></p>
                     <p>or <a class="click-here" href="{% url 'importer' %}">click here to import</a></p>
+                    {% endif %}
                     {% endif %}
                 </div>
             </div>
