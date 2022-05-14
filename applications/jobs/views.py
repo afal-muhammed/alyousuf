@@ -82,7 +82,6 @@ class ImporterView(View):
                 job_resource.import_data(dataset, dry_run=False)  # Actually import now
             return redirect('landing')
         elif rows:
-            print(rows)
             for row in rows:
                 if row:
                     item_list = row.split(",")

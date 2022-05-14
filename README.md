@@ -29,4 +29,4 @@ python manage.py runserver
 <li>we can add apply now feature to the application so that we can show the user the option to apply in both list and grid view</li>
 <li>can have a menu my job listings so that user can see all the jobs he listed</li>
 <li>can have menu applied jobs so that user can see all the jobs he applied</li>
-
+<li>Edit/Delete job postings which is posted by the user</li>

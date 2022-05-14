@@ -148,6 +148,7 @@
                     <h2>No Jobs to list</h2>
                     <p>You can add one going to the listing page
                         <a href="{% url 'landing' %}?grid=False"><i class="fa fa-list" style="color:#dc3545d6;" aria-hidden="true"></i></a></p>
+                    <p>or <a class="click-here" href="{% url 'importer' %}">click here to import</a></p>
                     {% endif %}
                 </div>
             </div>
@@ -196,6 +197,7 @@
             {% endfor %}
         </div>
     </div>
+    {% if page_obj %}
      <nav aria-label="Page navigation example">
       <ul class="pagination justify-content-center">
         {% if page_obj.has_previous %}
@@ -230,6 +232,7 @@
         {% endif %}
       </ul>
     </nav>
+    {% endif %}
     <!--end of Pagination-->
 
 </section>

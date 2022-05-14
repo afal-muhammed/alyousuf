@@ -45,6 +45,9 @@ padding:0.5em 1em !important;
 background-color:#dc3545d6;
 border-radius:0.25rem;
 }
+.click-here{
+color:#dc3545d6 !important;
+}
 .dataTables_wrapper .dataTables_filter input {
 border:2px solid;
 padding-right:10px;
