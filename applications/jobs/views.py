@@ -1,19 +1,23 @@
 import json
+from tablib import Dataset
 from django.shortcuts import render, redirect, reverse
 from django.views.generic import ListView
 from django.views import View
+from django.core.paginator import Paginator
 from applications.jobs.models import JobOpportunities
 from django.contrib.auth.decorators import login_required
 from django.utils.decorators import method_decorator
 from django.shortcuts import HttpResponseRedirect,HttpResponse
 from django.contrib import messages
+from .resources import JobResource
+
 # Create your views here.
 
 
 class LandingViewTabular(ListView):
     template_name = 'entries.html'
     context_object_name = 'job_listings'
-    paginate_by = 8
+    # paginate_by = 8
 
     def post(self, request):
         #TODO: validate each field . Show appropriate error messages
@@ -44,21 +48,13 @@ class LandingViewTabular(ListView):
 
     def get_context_data(self, *, object_list=None, **kwargs):
         context = super().get_context_data()
+        job_listings = self.get_queryset()
+        if self.request.GET.get("grid") == "True" or self.request.GET.get("page"):
+            paginator = Paginator(job_listings, 9)
+            page = self.request.GET.get('page', 1)
+            context['page_obj'] = paginator.page(page)
         return context
 
-# class LandingViewGrid(ListView):
-#     template_name = 'job-grid.html'
-#     context_object_name = 'job_listings'
-#     paginate_by = 8
-#
-#
-#     def get_queryset(self, *args, **kwargs):
-#         queryset = JobOpportunities.objects.all()
-#         return queryset
-
-    def get_context_data(self, *, object_list=None, **kwargs):
-        context = super().get_context_data()
-        return context
 
 class ImporterView(View):
 
@@ -69,7 +65,8 @@ class ImporterView(View):
     def post(self, request):
         rows = request.POST.getlist("table-rows[]", False)
         if request.FILES:
-            csv_file = request.FILES["csv_file", False]
+            csv_file = request.FILES["csv_file"]
+            print(csv_file)
             if not csv_file.name.endswith('.csv') and not csv_file.name.endswith('.ods'):
                 messages.error(request, 'File is not CSV type')
                 return HttpResponseRedirect(reverse("importer"))
@@ -77,24 +74,15 @@ class ImporterView(View):
             if csv_file.multiple_chunks():
                 messages.error(request, "Uploaded file is too big (%.2f MB)." % (csv_file.size / (1000 * 1000),))
                 return HttpResponseRedirect(reverse("importer"))
-            data = csv_file.read().decode("utf-8")
-            import re
-            rows = re.split('\n', data)  # splits along new line
-            rows.pop(0)
-            rows.pop()
-            print(rows)
-            for index, row in enumerate(rows):
-                cells = row.split(',')
-                print(cells)
-                job_obj = JobOpportunities()
-                job_obj.title = cells[0]
-                job_obj.job_description = cells[1]
-                job_obj.location = cells[2]
-                job_obj.phone_number = cells[3]
-                job_obj.company_name = cells[4]
-                job_obj.save()
+            job_resource = JobResource()
+            dataset = Dataset()
+            imported_data = dataset.load(csv_file.read().decode("utf-8"), format='csv',headers=True)
+            result = job_resource.import_data(dataset, dry_run=True)  # Test the data import
+            if not result.has_errors():
+                job_resource.import_data(dataset, dry_run=False)  # Actually import now
             return redirect('landing')
         elif rows:
+            print(rows)
             for row in rows:
                 if row:
                     item_list = row.split(",")

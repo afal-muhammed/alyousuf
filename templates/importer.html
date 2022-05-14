@@ -34,23 +34,39 @@
 <section class="hero-wrap d-flex align-items-center pd-top">
     <div class="container">
         <div class="row d-flex justify-content-center">
-            <div class="col-md-4>">
-                <form action="" method="POST" enctype="multipart/form-data" class="form-horizontal">
+<!--            <div class="col-md-4>">-->
+                <form action="" method="POST" enctype="multipart/form-data">
                     {% csrf_token %}
-                    <div class="form-group">
+<!--                    <div class="form-group">-->
                         <label for="name" class="col-md-3 col-sm-3 col-xs-12 control-label">Import Csv File: </label>
-                        <div class="col-md-8">
+<!--                        <div class="col-md-8">-->
                             <input type="file" name="csv_file" id="csv_file" required="True" class="form-control">
+<!--                        </div>-->
+<!--                    </div>-->
+<!--                    <div class="form-group">-->
+                        <div class="col-md-3 col-sm-3 col-xs-12 col-md-offset-3" style="margin-bottom:10px;">
+                            <button type="button" onclick="Upload()" class="btn btn-primary"><span class="glyphicon glyphicon-upload"
+                                                                  style="margin-right:5px;"></span>Import
+                            </button>
                         </div>
-                    </div>
+<!--                    </div>-->
+                    <p id="preview-text" class="hidden">Here is the Preview of the csv imported</p>
                     <div class="form-group">
                         <div class="col-md-3 col-sm-3 col-xs-12 col-md-offset-3" style="margin-bottom:10px;">
-                            <button class="btn btn-primary"><span class="glyphicon glyphicon-upload"
-                                                                  style="margin-right:5px;"></span>Upload
+                            <button id="confirm" type="submit" class="btn btn-primary hidden"><span class="glyphicon glyphicon-upload"
+                                                                  style="margin-right:5px;"></span>Confirm Import
                             </button>
                         </div>
                     </div>
                 </form>
+<!--            </div>-->
+        </div>
+    </div>
+</section>
+<section>
+    <div class="container">
+        <div class="row d-flex justify-content-center">
+            <div id="dvCSV">
             </div>
         </div>
     </div>
@@ -84,12 +100,25 @@
     {% endif %}
 </div>
 
-<form id="job" method="post">
-    {% csrf_token %}
-    <input type="hidden" name="jobs[]">
-    <div id="excel_table"></div>
-    <input id="submit" type="submit" value="Submit Table" class="hidden">
-</form>
+<section class="hero-wrap d-flex align-items-center pd-top">
+    <div class="container">
+        <div class="row d-flex justify-content-center">
+            <form id="job" method="post">
+                {% csrf_token %}
+                <div id="excel_table">
+                </div>
+<!--                <div class="form-group">-->
+<!--                    <div class="col-md-3 col-sm-3 col-xs-12 col-md-offset-3" style="margin-bottom:10px;">-->
+                        <button id="submit" type="submit" class="btn btn-primary hidden"><span
+                                class="glyphicon glyphicon-upload"
+                                style="margin-right:5px;"></span>Submit
+                        </button>
+<!--                    </div>-->
+<!--                </div>-->
+            </form>
+        </div>
+    </div>
+</section>
 
 
 <script>
@@ -97,7 +126,6 @@
     var data = $('textarea[name=excel_data]').val();
     console.log(data);
     var rows = data.split("\n");
-    console.log(rows[0], "aaaaaaaaaaaaa");
     var table = $('<table />');
     for(var y in rows) {
         if(y==0)
@@ -123,10 +151,43 @@
 
 // Insert into DOM
 $('#excel_table').html(table);
- var element = document.getElementById("submit");
-  element.classList.remove("hidden");
+ $("#submit").removeClass("hidden");
 }
 
-
+    function Upload() {
+        var fileUpload = document.getElementById("csv_file");
+        var regex = /^([a-zA-Z0-9\s_\\.\-:])+(.csv|.txt)$/;
+        if (regex.test(fileUpload.value.toLowerCase())) {
+            if (typeof (FileReader) != "undefined") {
+                var reader = new FileReader();
+                reader.onload = function (e) {
+                    var table = document.createElement("table");
+                    var rows = e.target.result.split("\n");
+                    for (var i = 0; i < rows.length; i++) {
+                        var cells = rows[i].split(",");
+                        if (cells.length > 1) {
+                            var row = table.insertRow(-1);
+                            for (var j = 0; j < cells.length; j++) {
+                                var cell = row.insertCell(-1);
+                                cell.innerHTML = cells[j];
+                            }
+                        }
+                    }
+                    var dvCSV = document.getElementById("dvCSV");
+                    dvCSV.innerHTML = "";
+                    dvCSV.appendChild(table);
+                }
+                reader.readAsText(fileUpload.files[0]);
+            } else {
+                alert("This browser does not support HTML5.");
+            }
+        } else {
+            alert("Please upload a valid CSV file.");
+        }
+        $("#confirm").removeClass("hidden");
+        $("#preview-text").removeClass("hidden");
+    }
 </script>
+
+
 {% endblock %}

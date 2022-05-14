@@ -76,7 +76,7 @@
         </div><!-- /.modal-content -->
     </div><!-- /.modal-dialog -->
 </div>
-	{% if request.GET.grid == "False" %}
+	{% if request.GET.grid == "False" or not request.GET.grid and not request.GET.page%}
     <caption><h3 class="header_text">Job listings</h3></caption>
 	<table id="example" class="table table-bordered display" style="width:100%">
     		<thead class="thead-dark">
@@ -86,6 +86,7 @@
 <!--				<th>Purchased Count</th>-->
 <!--				<th>Allocated Count</th>-->
                 <th>Job location</th>
+                <th>Company Name</th>
                 <th>contact</th>
 <!--                <th>Box</th>-->
 <!--                <th>Hole</th>-->
@@ -101,6 +102,7 @@
         		<td>{{ item.title }}</td>
 			<td>{% if item.job_description %}{{ item.job_description }}{% endif %}</td>
 			<td>{{ item.location }}</td>
+			<td>{{ item.company_name }}</td>
 			<td>{{ item.phone_number }}</td>
         </tr>
 
@@ -108,13 +110,11 @@
 		</tbody>
 		<tfoot>
             		<tr>
-				<th>Item Name</th>
-				<th>Item Description</th>
-                <th>Bin</th>
-				<th>Product In Count</th>
-				<th>Product Out Count</th>
-				<th>Product Purchased Count</th>
-                <th>Total Count</th>
+				<th>Title</th>
+				<th>Job Description</th>
+                <th>Location</th>
+				<th>Company Name</th>
+				<th>Contact Number</th>
             		</tr>
         	</tfoot>
 	</table>
@@ -146,6 +146,8 @@
                     <a href="{% url 'landing' %}?grid=False"><i class="fa fa-list" style="color:#dc3545d6;" aria-hidden="true"></i></a></p>
                     {% else %}
                     <h2>No Jobs to list</h2>
+                    <p>You can add one going to the listing page
+                        <a href="{% url 'landing' %}?grid=False"><i class="fa fa-list" style="color:#dc3545d6;" aria-hidden="true"></i></a></p>
                     {% endif %}
                 </div>
             </div>
@@ -180,8 +182,6 @@
 
                                 {{ job.job_description|linebreaks|safe|truncatewords:20 }}
                                 {% ifnotequal job.job_description job.job_description|truncatewords:20 %}
-<!--                                <a class="readmore" href="{% url 'event-detail' event.slug %}"><B>Continue-->
-<!--                                    Reading</B></a>-->
                                 {%endifnotequal%}
                             </p>
                         </div>
@@ -293,5 +293,6 @@ function imageUpload(){
    });
 
 	</script>
+
 
 {% endblock %}
